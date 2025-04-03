@@ -16,13 +16,24 @@ let Tab = createBottomTabNavigator()
 //导入页面组件
 import Home from './view/Home'
 import Fuwu from './view/fuwu'
-
+import My from './view/my'
 export default function App(){
   return(
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="首页" component={Home}/>
-        <Tab.Screen name="服务" component={Fuwu}/>
+        <Tab.Screen name="首页" component={Home} options={{
+          headerShown:false
+        }}/>
+        <Tab.Screen name="服务" component={Fuwu}
+          options={{
+            headerShown:false
+          }}
+        />
+        <Tab.Screen name="我的" component={My}
+          options={{
+            headerShown:false
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )
