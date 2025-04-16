@@ -24,6 +24,7 @@ const LoginPage = () => {
             if(res.data.code==200){
                  Alert.alert("登录成功")
             }else{
+                console.log('登录失败');
                 Alert.alert("登录失败")}
         })
     };
@@ -108,4 +109,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPage;    
+export default LoginPage;

@@ -37,9 +37,9 @@ export default function App(){
                   options={{
                     headerStyle: { height: 40 },
                     headerTitleAlign: 'center',
-                    headerTitle: () => (
-                      <Text style={{color: 'red', fontSize: 10}}>qiehuan</Text>
-                    )
+                    // headerTitle: () => (
+                    //   <Text style={{color: 'red', fontSize: 10}}>qiehuan</Text>
+                    // )
                   }}
                 />
                 <Tab.Screen 
