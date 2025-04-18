@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Image, Animated, FlatList } from 'react-native'
-import React, { useState, useRef, useEffect } from 'react'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Image, Animated, FlatList } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 type CarouselItem = {
   id: number;
@@ -10,31 +10,35 @@ type CarouselItem = {
   image: string;
 }
 
-const { width: screenWidth } = Dimensions.get('window')
+const { width: screenWidth } = Dimensions.get('window');
 
-const Home = () => {
+const Home = ({ navigation }:{navigation:any}) => {
   const [carouselItems] = useState<CarouselItem[]>([
     { id: 1, title: '社区活动', image: 'https://picsum.photos/600/300' },
     { id: 2, title: '环境整治', image: 'https://picsum.photos/600/300' },
     { id: 3, title: '文化建设', image: 'https://picsum.photos/600/300' },
   ])
 
-  const scrollX = useRef(new Animated.Value(0)).current
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const flatListRef = useRef(null)
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       if (currentIndex < carouselItems.length - 1) {
-        flatListRef.current.scrollToIndex({
+        if(flatListRef.current){
+          flatListRef.current.scrollToIndex({
           index: currentIndex + 1,
-          animated: true
-        })
+          animated: true,
+        });
+        }
       } else {
-        flatListRef.current.scrollToIndex({
+        if(flatListRef.current){
+           flatListRef.current.scrollToIndex({
           index: 0,
-          animated: true
-        })
+          animated: true,
+        });
+        }
       }
     }, 3000)
 
@@ -44,18 +48,18 @@ const Home = () => {
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
     { useNativeDriver: true }
-  )
+  );
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setCurrentIndex(viewableItems[0].index)
     }
-  }).current
+  }).current;
 
   const renderCarouselItem = ({ item }: { item: CarouselItem }) => (
     <View style={[styles.carouselItem, { width: screenWidth - 40 }]}>
       <Image 
-        source={{ uri: item.image }} 
+        source={{ uri: item.image }}
         style={styles.carouselImage} 
         resizeMode="contain"
       />
@@ -63,7 +67,7 @@ const Home = () => {
         <Text style={styles.carouselTitle}>{item.title}</Text>
       </View>
     </View>
-  )
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -107,7 +111,7 @@ const Home = () => {
           <ServiceItem icon="vpn-key" title="远程开门" />
           <ServiceItem icon="people" title="访客管理" />
           <ServiceItem icon="qr-code" title="扫码审核" />
-          <ServiceItem icon="more-horiz" title="更多" />
+          <ServiceItem icon="more-horiz" title="更多" onPress={() => navigation.navigate('More')} />
         </View>
       </View>
 
@@ -121,23 +125,23 @@ const Home = () => {
       </View>
     </ScrollView>
   )
-}
+};
 
-const ServiceItem = ({ icon, title }) => (
-  <TouchableOpacity style={styles.serviceItem}>
+const ServiceItem = ({ icon, title, onPress }) => (
+  <TouchableOpacity style={styles.serviceItem} onPress={onPress}>
     <View style={styles.iconContainer}>
       <Icon name={icon} size={28} color="#4A90E2" />
     </View>
     <Text style={styles.serviceTitle}>{title}</Text>
   </TouchableOpacity>
-)
+);
 
 const CommunityItem = ({ title }) => (
   <TouchableOpacity style={styles.communityItem}>
     <View style={styles.communityImagePlaceholder}></View>
     <Text style={styles.communityTitle}>{title}</Text>
   </TouchableOpacity>
-)
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -281,6 +285,6 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight: '500',
   },
-})
+});
 
 export default Home
