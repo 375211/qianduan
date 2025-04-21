@@ -27,6 +27,7 @@ const LoginPage = () => {
         })
 
         // 这里可以添加登录逻辑
+<<<<<<< HEAD
         // console.log('phone:', phone, 'pwd:', pwd);
         axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
             if (res.data.code == 200) {
@@ -37,6 +38,14 @@ const LoginPage = () => {
             } else {
                 Alert.alert("登录失败")
             }
+=======
+        console.log('phone:', phone, 'pwd:', pwd);
+        axios.post("http://blackcat2004.gnway.cc:80/login",{phone,pwd}).then(res=>{
+            if(res.data.code==200){
+                 Alert.alert("登录成功")
+            }else{
+                Alert.alert("登录失败")}
+>>>>>>> ef9e1e003b6114f9ed9182cab8437d2b16ac7b0d
         })
     };
     const toggleDialog1 = () => {
@@ -129,4 +138,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPage;    
+export default LoginPage;
