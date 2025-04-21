@@ -1,55 +1,105 @@
-import React,{useState,useEffect} from'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet,StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import axios from'axios';
-axios.defaults.baseURL="http://localhost:3000"
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import axios from 'axios';
+import storage from '../component/AsyncStorage';
+
+// 定义用户信息类型
+interface UserInfo {
+  data: {
+    name: string;
+    phone: string;
+    img: string[];
+  };
+}
+
+// 定义导航类型
+type RootStackParamList = {
+  登录: undefined;
+  [key: string]: any;
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const App = () => {
-  const navigation = useNavigation();
-  const [data, setData] = useState([]);
+  const navigation = useNavigation<NavigationProp>();
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    axios.get('/getdata').then(res => {
-      setData(res.data);
-    });
+    yanzheng();
+    getuser();
   }, []);
+
+  const yanzheng = async () => {
+    try {
+      const accessToken = await storage.load({ 
+        key: 'accessToken',
+        autoSync: true
+      });
+      
+      const res = await axios.get("http://192.168.80.1:3000/userinfo", {
+        headers: {
+          'AccessToken': accessToken,
+        }
+      });
+      
+      storage.save({ key: 'userInfo', data: res.data });
+      setUserInfo(res.data);
+    } catch (error) {
+      console.error("验证失败:", error);
+      navigation.navigate('登录');
+    }
+  };
+
+  const getuser = async () => {
+    try {
+      const userData = await storage.load({ key: 'userInfo' });
+      if (userData) {
+        setUserInfo(userData);
+      }
+    } catch (error) {
+      console.error('获取用户信息失败:', error);
+      setUserInfo(null);
+    }
+  };
+
+  const renderMenuItem = (title: string, rightContent?: React.ReactNode, onPress?: () => void) => (
+    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+      <Text style={styles.menuTitle}>{title}</Text>
+      <View style={styles.menuRight}>
+        {rightContent}
+        <Text style={styles.arrowIcon}>›</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      {/* 头部信息 */}
-      <View style={styles.header}>
-        <Image style={styles.profilePic} />
-        <View style={styles.userInfo}>
-          <Text style={styles.username}>肌肉最嗨了-33</Text>
-          <Text style={styles.phoneNumber}>138****7766</Text>
+      <StatusBar translucent={true} />
+      {/* 头部用户信息 */}
+      <TouchableOpacity style={styles.header}>
+        <Image 
+          // source={{uri:userInfo?.data.img[0]}}
+          style={styles.avatar}
+        />
+        <View style={styles.userInfoContainer}>
+          <Text style={styles.username}>{userInfo?.data.name || '未登录'}</Text>
+          <Text style={styles.phoneNumber}>{userInfo?.data.phone || '未绑定手机号'}</Text>
         </View>
+        <Text style={styles.arrowIcon}>›</Text>
+      </TouchableOpacity>
+
+      {/* 我的社区 */}
+      <View style={styles.communityCard}>
+        <Text style={styles.cardTitle}>我的社区</Text>
+        <Text style={styles.communityCount}>6</Text>
       </View>
-      {/* 功能模块 */}
-      <View style={styles.module}>
-        <View style={styles.moduleLeft}>
-          <Text style={styles.moduleTitle}>我的社区</Text>
-        </View>
-        <View style={styles.moduleRight}>
-          <Text style={styles.moduleValue}>6</Text>
-        </View>
-      </View>
-      <TouchableOpacity style={styles.module}>
-        <View style={styles.moduleLeft}>
-          <Image  style={styles.icon} /> {/* 卡券图标路径 */}
-          <Text style={styles.moduleTitle} >我的卡券</Text>
-        </View>
-        <View style={styles.moduleRight}>
-          <View style={styles.redDot}></View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.module}>
-        <Text style={styles.moduleTitle}>设置</Text>
-        <Image  style={styles.arrowIcon} /> {/* 箭头图标路径 */}
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.module}>
-        <Text style={styles.moduleTitle}>关于</Text>
-        <Text style={styles.version}>2.0.3</Text>
-        <Image  style={styles.arrowIcon} /> {/* 箭头图标路径 */}
-      </TouchableOpacity>
+
+      {/* 菜单项 */}
+      {renderMenuItem('我的卡券', <View style={styles.redDot} />)}
+      {renderMenuItem('设置')}
+      {renderMenuItem('关于', <Text style={styles.version}>2.0.3</Text>)}
     </View>
   );
 };
@@ -58,76 +108,82 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
-    padding: 20,
+    paddingTop:60
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
+    backgroundColor: '#fff',
+    marginBottom: 10,
   },
-  profilePic: {
+  avatar: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    marginRight: 10,
+    backgroundColor: '#eee',
   },
-  userInfo: {
+  userInfoContainer: {
     flex: 1,
+    marginLeft: 15,
   },
   username: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 4,
   },
   phoneNumber: {
     fontSize: 14,
     color: '#666',
   },
-  module: {
+  communityCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginBottom: 10,
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  moduleLeft: {
-    flex: 1,
-    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  moduleRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  moduleTitle: {
+  cardTitle: {
     fontSize: 16,
-  },
-  moduleValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
     color: '#333',
   },
-  icon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
+  communityCount: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
+    marginBottom: 1,
+  },
+  menuTitle: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+  },
+  menuRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowIcon: {
+    fontSize: 20,
+    color: '#ccc',
+    marginLeft: 8,
   },
   redDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
     backgroundColor: 'red',
-    marginLeft: 5,
-  },
-  arrowIcon: {
-    width: 15,
-    height: 15,
-    tintColor: '#999',
-    marginLeft: 10,
+    marginRight: 8,
   },
   version: {
     fontSize: 14,
     color: '#999',
-    marginLeft: 10,
+    marginRight: 8,
   },
 });
 

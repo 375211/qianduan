@@ -8,4 +8,5 @@ let storage = new Storage({
     enableCache: true,
     sync: {}
 })
+
 export default storage;

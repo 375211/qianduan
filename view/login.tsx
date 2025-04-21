@@ -1,4 +1,4 @@
-import React, { useState } from'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -9,29 +9,43 @@ import {
     KeyboardAvoidingView,
     Platform,
     Alert
-} from'react-native';
+} from 'react-native';
 import axios from 'axios';
 const backgroundImage = require('../assets/background.jpg'); // 替换为你的背景图片路径
-
+import storage from '../component/AsyncStorage';
+import { useNavigation } from '@react-navigation/native';
+import { Dialog } from '@rneui/themed';
 const LoginPage = () => {
+    const navigation = useNavigation();
     const [phone, setphone] = useState('');
     const [pwd, setpwd] = useState('');
+    const [visible1, setVisible1] = useState(false);
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        let datas = storage.load({ key: 'accessToken' }).then(res => {
+            console.log(res);
+        })
+
         // 这里可以添加登录逻辑
-        console.log('phone:', phone, 'pwd:', pwd);
-        axios.post("http://zyh37521.gnway.cc:8000/login",{phone,pwd}).then(res=>{
-            if(res.data.code==200){
-                 Alert.alert("登录成功")
-            }else{
-                Alert.alert("登录失败")}
+        // console.log('phone:', phone, 'pwd:', pwd);
+        axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
+            if (res.data.code == 200) {
+                setVisible1(!visible1);
+                storage.save({ key: 'accessToken', data: res.data.accessToken })
+                storage.save({ key: 'refreshToken', data: res.data.refreshToken })
+                navigation.navigate('Main')
+            } else {
+                Alert.alert("登录失败")
+            }
         })
     };
-
+    const toggleDialog1 = () => {
+        setVisible1(!visible1);
+    };
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior={Platform.OS === 'ios'? 'padding' : 'height'}>
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <ImageBackground source={backgroundImage} style={styles.background}>
                 <View style={styles.logoContainer}>
                     <Text style={styles.logoText}>登录</Text>
@@ -57,6 +71,13 @@ const LoginPage = () => {
                     <Text style={styles.loginButtonText}>登录</Text>
                 </TouchableOpacity>
             </ImageBackground>
+            <Dialog
+                isVisible={visible1}
+                onBackdropPress={toggleDialog1}
+            >
+                <Dialog.Title  />
+                <Text>登录成功</Text>
+            </Dialog>
         </KeyboardAvoidingView>
     );
 };
