@@ -20,7 +20,7 @@ const LoginPage = () => {
     const handleLogin = () => {
         // 这里可以添加登录逻辑
         console.log('phone:', phone, 'pwd:', pwd);
-        axios.post("http://zyh37521.gnway.cc:8000/login",{phone,pwd}).then(res=>{
+        axios.post("http://blackcat2004.gnway.cc:80/login",{phone,pwd}).then(res=>{
             if(res.data.code==200){
                  Alert.alert("登录成功")
             }else{
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPage;    
+export default LoginPage;

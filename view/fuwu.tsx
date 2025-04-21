@@ -3,23 +3,21 @@
     View,
     Text,
     StyleSheet,
+    Button
  } from 'react-native'
 
  import {useNavigation} from '@react-navigation/native'
 
 export default function App(){
     const navigation = useNavigation()
+
+    function btn() {
+        navigation.navigate('电子通行证管理')
+    }
     return(
         <View>
-            <Text>Hello111</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello11111</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
+  
+            <Button title='电子通行证管理' onPress={btn}></Button>
         </View>
     )
 }
