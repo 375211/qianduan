@@ -8,6 +8,7 @@ import {
   import React from 'react';
   import { useNavigation } from '@react-navigation/native';
   import Icon from 'react-native-vector-icons/MaterialIcons';
+
   // 定义常量颜色和尺寸，便于统一管理和复用
   const COLORS = {
     primary: '#4A90E2',
@@ -43,7 +44,7 @@ import {
     <TouchableOpacity
       style={styles.card}
       activeOpacity={0.8} // 添加点击反馈效果
-      onPress={onPress} 
+      onPress={onPress}
     >
       <View style={styles.cardContent}>
         <View style={styles.cardLeft}>
@@ -59,21 +60,23 @@ import {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.backButton}
             activeOpacity={0.7}
           >
-           <Text onPress={() => navigation.goBack()}>←返回</Text>
+           <Text onPress={() => navigation.goBack()}>
+           <Text style={styles.backButton} onPress={()=>navigation.goBack()}>{'<'}</Text>
+            返回</Text>
           </TouchableOpacity>
           <Text style={styles.title}>人员关怀</Text>
         </View>
-        <ScrollView 
+        <ScrollView
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <Card 
-            title="关怀对象"  
+          <Card
+            title="关怀对象"
             icon=''
             onPress={() =>navigation.navigate('Objected')}
             />

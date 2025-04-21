@@ -17,7 +17,7 @@ const Home = ({ navigation }:{navigation:any}) => {
     { id: 1, title: '社区活动', image: 'https://picsum.photos/600/300' },
     { id: 2, title: '环境整治', image: 'https://picsum.photos/600/300' },
     { id: 3, title: '文化建设', image: 'https://picsum.photos/600/300' },
-  ])
+  ]);
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,10 +40,10 @@ const Home = ({ navigation }:{navigation:any}) => {
         });
         }
       }
-    }, 3000)
+    }, 3000);
 
     return () => clearInterval(timer)
-  }, [currentIndex, carouselItems.length])
+  }, [currentIndex, carouselItems.length]);
 
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -52,15 +52,15 @@ const Home = ({ navigation }:{navigation:any}) => {
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index)
+      setCurrentIndex(viewableItems[0].index);
     }
   }).current;
 
   const renderCarouselItem = ({ item }: { item: CarouselItem }) => (
     <View style={[styles.carouselItem, { width: screenWidth - 40 }]}>
-      <Image 
+      <Image
         source={{ uri: item.image }}
-        style={styles.carouselImage} 
+        style={styles.carouselImage}
         resizeMode="contain"
       />
       <View style={styles.carouselTitleContainer}>
@@ -73,7 +73,7 @@ const Home = ({ navigation }:{navigation:any}) => {
     <ScrollView style={styles.container}>
       {/* 顶部导航栏 */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>城市花园</Text>
+        <Text style={styles.headerTitle} onPress={()=>navigation.navigate('Login')}>城市花园</Text>
       </View>
 
       {/* 轮播图 */}
@@ -124,7 +124,7 @@ const Home = ({ navigation }:{navigation:any}) => {
         </View>
       </View>
     </ScrollView>
-  )
+  );
 };
 
 const ServiceItem = ({ icon, title, onPress }) => (

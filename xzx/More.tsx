@@ -71,8 +71,9 @@ const More = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-       <Text onPress={() => navigation.goBack()}>←返回</Text>
-        <Text style={styles.headerTitle}>服务</Text>
+        <Text style={styles.headerTitle}>
+        <Text onPress={() => navigation.goBack()}>←</Text>
+          服务</Text>
       </View>
 
       <View style={styles.section}>

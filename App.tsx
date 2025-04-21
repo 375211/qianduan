@@ -13,6 +13,8 @@ import Login from './view/login';
 import More from './xzx/More';
 import People from './xzx/People';
 import Objected from './xzx/Objected';
+import AddPeople from './xzx/AddPeople';
+import XinZeng from './xzx/XinZeng';
 // 创建导航器
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,7 +33,7 @@ function MainTabs() {
       />
       <Tab.Screen 
         name="服务" 
-        component={Fuwu}
+        component={More}
         options={{ headerShown: false }}
       />
       <Tab.Screen 
@@ -65,9 +67,9 @@ export default function App() {
         <Stack.Navigator>
           {/* 主界面：显示底部导航 */}
           <Stack.Screen 
-            name="MainTabs" 
-            component={MainTabs} 
-            options={{ headerShown: false }} 
+            name="MainTabs"
+            component={MainTabs}
+            options={{ headerShown: false }}
           />
 
           {/* More页面：保持底部导航栏可见 */}
@@ -76,7 +78,7 @@ export default function App() {
             component={More}
             options={{
               headerShown: false,
-              presentation: 'containedModal'
+              presentation: 'containedModal',
             }} 
           />
           {/* {人员关怀} */}
@@ -85,7 +87,7 @@ export default function App() {
             component={People}
             options={{
               headerShown: false,
-              presentation: 'containedModal'
+              presentation: 'containedModal',
             }} 
           />
           {/* {具体关怀页面} */}
@@ -94,14 +96,32 @@ export default function App() {
             component={Objected}
             options={{
               headerShown: false,
-              presentation: 'containedModal'
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* 添加关怀人员页面 */}
+          <Stack.Screen 
+            name="AddPeople" 
+            component={AddPeople}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }}
+          />
+          {/* 添加 */}
+          <Stack.Screen 
+            name="XinZeng" 
+            component={XinZeng}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
             }} 
           />
           {/* 登录页面：全屏无底部栏 */}
-          <Stack.Screen 
-            name="登录" 
-            component={Login} 
-            options={{ headerShown: false }} 
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
