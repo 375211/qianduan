@@ -9,6 +9,9 @@ const ServiceCard = ({ title, icon }:{title:string, icon:string}) => {
     if (title === '人员关怀') {
       navigation.navigate('People');
     }
+    else if(title === '电子通行证管理'){
+      navigation.navigate('电子通行证管理')
+    }
   };
   return (
     <TouchableOpacity style={styles.card} onPress={handlePress}>

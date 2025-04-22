@@ -36,7 +36,6 @@ export default function QRcodeSet() {
             setStartDate(selectedDate);
         }
     };
-
     const onEndDateChange = (_event: Event, selectedDate?: Date) => {
         setShowEndPicker(false);
         if (selectedDate) {

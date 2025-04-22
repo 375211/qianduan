@@ -94,7 +94,7 @@ const Home = ({ navigation }:{navigation:any}) => {
       {/* 公告栏 */}
       <View style={styles.noticeBar}>
         <Icon name="campaign" size={24} color="#FF6B6B" />
-        <Text style={styles.noticeText}>1号元水管改造，停供水12小时</Text>
+        <Text style={styles.noticeText} onPress={()=>{navigation.navigate('PassQRcode')}}>1号元水管改造，停供水12小时</Text>
         <TouchableOpacity>
           <Text style={styles.moreText}>更多</Text>
         </TouchableOpacity>

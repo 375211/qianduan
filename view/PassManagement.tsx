@@ -61,7 +61,6 @@ export default function PassManagement() {
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     PassManagement: {
         margin: 10,

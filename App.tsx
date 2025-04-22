@@ -6,6 +6,7 @@ import {
   // Alert,
   Modal,
   StyleSheet,
+  StatusBar,
 } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -28,7 +29,6 @@ import QRcodeSet from './view/QRcodeSet';
 
 const HeaderRight = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <>
       <TouchableOpacity
@@ -37,7 +37,6 @@ const HeaderRight = () => {
       >
         <Text style={{ color: '#3399FF' }}>更多操作</Text>
       </TouchableOpacity>
-
       <Modal
         animationType="fade"
         transparent={true}
@@ -68,7 +67,6 @@ const HeaderRight = () => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
@@ -119,52 +117,12 @@ import People from './xzx/People';
 import Objected from './xzx/Objected';
 import AddPeople from './xzx/AddPeople';
 import XinZeng from './xzx/XinZeng';
-// 创建导航器
 
-// 1. 先定义底部导航组件
-// function MainTabs() {
-//   return (
-//     <Tab.Navigator>
-//       <Tab.Screen 
-//         name="首页" 
-//         component={Home}
-//         options={{
-//           headerStyle: { height: 40 },
-//           headerTitleAlign: 'center',
-//         }}
-//       />
-//       <Tab.Screen 
-//         name="服务" 
-//         component={More}
-//         options={{ headerShown: false }}
-//       />
-//       <Tab.Screen 
-//         name="我的" 
-//         component={My}
-//         options={{ headerShown: false }}
-//       />
-//     </Tab.Navigator>
-//   );
-// }
-
-// 自定义 More 页面以控制底部导航栏的显示
-// function MoreScreen({ navigation }: any) {
-//   const isFocused = useIsFocused(); // 判断当前页面是否处于焦点状态
-
-//   React.useEffect(() => {
-//     if (isFocused) {
-//       navigation.setOptions({
-//         headerShown: false,
-//       });
-//     }
-//   }, [isFocused, navigation]);
-
-//   return <More />;
-// }
 
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar hidden={true} />
       <NavigationContainer>
         <Stack.Navigator>
           {/* 主界面包含底部导航 */}
@@ -187,13 +145,10 @@ export default function App() {
                 />
                 <Tab.Screen
                   name="服务"
-                  component={Fuwu}
+                  component={More}
                   options={{
-                    headerStyle: { height: 100 },
+                    headerStyle: { height: 85 },
                     headerTitleAlign: 'center',
-                    headerTitle: () => (
-                      <Text style={{ color: 'red', fontSize: 10 }}>首页</Text>
-                    )
                   }}
                 />
                 {/* 我的页面也保留在底部导航中 */}

@@ -8,7 +8,7 @@ import {
     ImageBackground,
     KeyboardAvoidingView,
     Platform,
-    Alert
+    Alert,
 } from 'react-native';
 import axios from 'axios';
 const backgroundImage = require('../assets/background.jpg'); // 替换为你的背景图片路径
@@ -21,24 +21,24 @@ const LoginPage = () => {
     const [pwd, setpwd] = useState('');
     const [visible1, setVisible1] = useState(false);
 
-    // const handleLogin = async () => {
-    //     let datas = storage.load({ key: 'accessToken' }).then(res => {
-    //         console.log(res);
-    //     })
+    const handleLogin = async () => {
+        let datas = storage.load({ key: 'accessToken' }).then(res => {
+            console.log(res);
+        })
 
-    //     // 这里可以添加登录逻辑
-    //     // console.log('phone:', phone, 'pwd:', pwd);
-    //     axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
-    //         if (res.data.code == 200) {
-    //             setVisible1(!visible1);
-    //             storage.save({ key: 'accessToken', data: res.data.accessToken })
-    //             storage.save({ key: 'refreshToken', data: res.data.refreshToken })
-    //             navigation.navigate('Main')
-    //         } else {
-    //             Alert.alert("登录失败")
-    //         }
-    //     })
-    // };
+        // 这里可以添加登录逻辑
+        // console.log('phone:', phone, 'pwd:', pwd);
+        axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
+            if (res.data.code == 200) {
+                setVisible1(!visible1);
+                storage.save({ key: 'accessToken', data: res.data.accessToken })
+                storage.save({ key: 'refreshToken', data: res.data.refreshToken })
+                navigation.navigate('Main')
+            } else {
+                Alert.alert("登录失败")
+            }
+        })
+    };
     const toggleDialog1 = () => {
         setVisible1(!visible1);
     };
