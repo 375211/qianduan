@@ -29,7 +29,6 @@ import QRcodeSet from './view/QRcodeSet';
 
 const HeaderRight = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <>
       <TouchableOpacity
@@ -38,7 +37,6 @@ const HeaderRight = () => {
       >
         <Text style={{ color: '#3399FF' }}>更多操作</Text>
       </TouchableOpacity>
-
       <Modal
         animationType="fade"
         transparent={true}
@@ -69,7 +67,6 @@ const HeaderRight = () => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
@@ -115,12 +112,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+import More from './xzx/More';
+import People from './xzx/People';
+import Objected from './xzx/Objected';
+import AddPeople from './xzx/AddPeople';
+import XinZeng from './xzx/XinZeng';
+
+
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
-            <StatusBar hidden={false} />
-      {/* <StatusBar  barStyle={'default'} /> */}
-
+      <StatusBar hidden={false} />
       <NavigationContainer>
         <Stack.Navigator>
           {/* 主界面包含底部导航 */}
@@ -143,14 +145,13 @@ export default function App() {
                 />
                 <Tab.Screen
                   name="服务"
-                  component={Fuwu}
+                  component={More}
                   options={{
-                    headerStyle: { height: 100 },
+
                     headerTitleAlign: 'center',
-                    headerTitle: () => (
-                      <Text style={{ color: 'red', fontSize: 10 }}>首页</Text>
-                    )
+                 
                   }}
+
                 />
                 {/* 我的页面也保留在底部导航中 */}
                 <Tab.Screen
@@ -169,8 +170,54 @@ export default function App() {
           </Stack.Screen>
 
           {/* 登录页面独立于底部导航 */}
+          {/* More页面：保持底部导航栏可见 */}
+          <Stack.Screen 
+            name="More" 
+            component={More}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* {人员关怀} */}
+          <Stack.Screen 
+            name="People" 
+            component={People}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* {具体关怀页面} */}
+          <Stack.Screen 
+            name="Objected" 
+            component={Objected}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* 添加关怀人员页面 */}
+          <Stack.Screen 
+            name="AddPeople" 
+            component={AddPeople}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }}
+          />
+          {/* 添加 */}
+          <Stack.Screen 
+            name="XinZeng" 
+            component={XinZeng}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* 登录页面：全屏无底部栏 */}
           <Stack.Screen
-            name="登录"
+            name="Login"
             component={Login}
             options={{ headerShown: false }}
           />
@@ -219,5 +266,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </View>
-  )
+  );
 }

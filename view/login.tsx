@@ -8,7 +8,7 @@ import {
     ImageBackground,
     KeyboardAvoidingView,
     Platform,
-    Alert
+    Alert,
 } from 'react-native';
 import axios from 'axios';
 const backgroundImage = require('../assets/background.jpg'); // 替换为你的背景图片路径
