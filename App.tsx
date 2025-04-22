@@ -3,7 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  // Alert,
+  Alert,
+  StatusBar,
   Modal,
   StyleSheet,
 } from 'react-native';
@@ -117,6 +118,9 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
+            <StatusBar hidden={false} />
+      {/* <StatusBar  barStyle={'default'} /> */}
+
       <NavigationContainer>
         <Stack.Navigator>
           {/* 主界面包含底部导航 */}
