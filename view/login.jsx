@@ -21,33 +21,24 @@ const LoginPage = () => {
     const [pwd, setpwd] = useState('');
     const [visible1, setVisible1] = useState(false);
 
-    const handleLogin = async () => {
-        let datas = storage.load({ key: 'accessToken' }).then(res => {
-            console.log(res);
-        })
+    // const handleLogin = async () => {
+    //     let datas = storage.load({ key: 'accessToken' }).then(res => {
+    //         console.log(res);
+    //     })
 
-        // 这里可以添加登录逻辑
-<<<<<<< HEAD
-        // console.log('phone:', phone, 'pwd:', pwd);
-        axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
-            if (res.data.code == 200) {
-                setVisible1(!visible1);
-                storage.save({ key: 'accessToken', data: res.data.accessToken })
-                storage.save({ key: 'refreshToken', data: res.data.refreshToken })
-                navigation.navigate('Main')
-            } else {
-                Alert.alert("登录失败")
-            }
-=======
-        console.log('phone:', phone, 'pwd:', pwd);
-        axios.post("http://blackcat2004.gnway.cc:80/login",{phone,pwd}).then(res=>{
-            if(res.data.code==200){
-                 Alert.alert("登录成功")
-            }else{
-                Alert.alert("登录失败")}
->>>>>>> ef9e1e003b6114f9ed9182cab8437d2b16ac7b0d
-        })
-    };
+    //     // 这里可以添加登录逻辑
+    //     // console.log('phone:', phone, 'pwd:', pwd);
+    //     axios.post("http://192.168.80.1:3000/login", { phone, pwd }).then(res => {
+    //         if (res.data.code == 200) {
+    //             setVisible1(!visible1);
+    //             storage.save({ key: 'accessToken', data: res.data.accessToken })
+    //             storage.save({ key: 'refreshToken', data: res.data.refreshToken })
+    //             navigation.navigate('Main')
+    //         } else {
+    //             Alert.alert("登录失败")
+    //         }
+    //     })
+    // };
     const toggleDialog1 = () => {
         setVisible1(!visible1);
     };

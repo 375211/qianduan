@@ -114,6 +114,54 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+import More from './xzx/More';
+import People from './xzx/People';
+import Objected from './xzx/Objected';
+import AddPeople from './xzx/AddPeople';
+import XinZeng from './xzx/XinZeng';
+// 创建导航器
+
+// 1. 先定义底部导航组件
+// function MainTabs() {
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen 
+//         name="首页" 
+//         component={Home}
+//         options={{
+//           headerStyle: { height: 40 },
+//           headerTitleAlign: 'center',
+//         }}
+//       />
+//       <Tab.Screen 
+//         name="服务" 
+//         component={More}
+//         options={{ headerShown: false }}
+//       />
+//       <Tab.Screen 
+//         name="我的" 
+//         component={My}
+//         options={{ headerShown: false }}
+//       />
+//     </Tab.Navigator>
+//   );
+// }
+
+// 自定义 More 页面以控制底部导航栏的显示
+// function MoreScreen({ navigation }: any) {
+//   const isFocused = useIsFocused(); // 判断当前页面是否处于焦点状态
+
+//   React.useEffect(() => {
+//     if (isFocused) {
+//       navigation.setOptions({
+//         headerShown: false,
+//       });
+//     }
+//   }, [isFocused, navigation]);
+
+//   return <More />;
+// }
+
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
@@ -165,8 +213,54 @@ export default function App() {
           </Stack.Screen>
 
           {/* 登录页面独立于底部导航 */}
+          {/* More页面：保持底部导航栏可见 */}
+          <Stack.Screen 
+            name="More" 
+            component={More}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* {人员关怀} */}
+          <Stack.Screen 
+            name="People" 
+            component={People}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* {具体关怀页面} */}
+          <Stack.Screen 
+            name="Objected" 
+            component={Objected}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* 添加关怀人员页面 */}
+          <Stack.Screen 
+            name="AddPeople" 
+            component={AddPeople}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }}
+          />
+          {/* 添加 */}
+          <Stack.Screen 
+            name="XinZeng" 
+            component={XinZeng}
+            options={{
+              headerShown: false,
+              presentation: 'containedModal',
+            }} 
+          />
+          {/* 登录页面：全屏无底部栏 */}
           <Stack.Screen
-            name="登录"
+            name="Login"
             component={Login}
             options={{ headerShown: false }}
           />
@@ -215,5 +309,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </View>
-  )
+  );
 }
